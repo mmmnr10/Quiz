@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const TriviaContext = createContext();
 
@@ -69,11 +69,21 @@ export const TriviaProvider = ({ children }) => {
   };
 
   const updateAdminSettings = (newSettings) => {
-    setAdminSettings((prevSettings) => ({
-      ...prevSettings, // Keep previous settings
-      ...newSettings, // Override with new settings
-    }));
+    setAdminSettings((prevSettings) => {
+      const updatedSettings = { ...prevSettings, ...newSettings };
+
+      localStorage.setItem('adminSettings', JSON.stringify(updatedSettings));
+
+      return updatedSettings;
+    });
   };
+
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('adminSettings');
+    if (savedSettings) {
+      setAdminSettings(JSON.parse(savedSettings));
+    }
+  }, []);
 
   return (
     <TriviaContext.Provider

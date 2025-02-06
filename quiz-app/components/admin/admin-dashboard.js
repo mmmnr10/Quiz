@@ -11,13 +11,16 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Label } from '../ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { useToast } from '../../hooks/use-toast';
 
 const AdminDashboard = () => {
-  const { adminSettings, updateAdminSettings } = useTrivia();
-  const [numOfQuestions, setNumOfQuestions] = useState(
-    adminSettings.numOfQuestions
-  );
-  const [questionType, setQuestionType] = useState(adminSettings.questionType);
+  const { adminSettings, updateAdminSettings } = useTrivia(),
+    [numOfQuestions, setNumOfQuestions] = useState(
+      adminSettings.numOfQuestions
+    ),
+    [questionType, setQuestionType] = useState(adminSettings.questionType),
+    { toast } = useToast();
 
   useEffect(() => {
     setNumOfQuestions(adminSettings.numOfQuestions);
@@ -30,13 +33,32 @@ const AdminDashboard = () => {
       questionType,
     });
 
-    alert('Settings updated successfully!');
+    toast({
+      description: 'Settings saved successfully!',
+    });
   };
 
   return (
-    <div className='flex justify-center'>
-      <main className='flex flex-col  text-white min-h-screen gap-3 w-56'>
-        <h1 className='text-3xl font-bold mb-6'>Admin Settings</h1>
+    <div className='flex justify-center '>
+      <main className='flex flex-col  text-white min-h-screen gap-3 w-80 gap-5'>
+        <Card className='text-center'>
+          <CardHeader>
+            <CardTitle className='text-2xl font-bold'>
+              Current Settings
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='mb-4'>
+              <Label className='font-medium mb-1'>Number of Questions: </Label>
+              <span>{adminSettings.numOfQuestions}</span>
+            </div>
+            <div className='mb-4'>
+              <Label className='font-medium mb-1'>Question Type: </Label>
+              <span>{adminSettings.questionType}</span>
+            </div>
+          </CardContent>
+        </Card>
+        <h1 className='text-3xl font-bold mb-6 text-center'>Admin Settings</h1>
         <div className='mb-4'>
           <Label className='font-medium mb-1'>Number of Questions:</Label>
           <Input
@@ -49,7 +71,7 @@ const AdminDashboard = () => {
         </div>
         <div className='mb-4'>
           <Label className='font-medium mb-1'>Question Type:</Label>
-          <Select>
+          <Select value={questionType} onValueChange={setQuestionType}>
             <SelectTrigger>
               <SelectValue placeholder='Select Question Type' />
             </SelectTrigger>
