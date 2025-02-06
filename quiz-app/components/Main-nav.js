@@ -25,8 +25,6 @@ const MainNav = (className, ...props) => {
     }
   }, []);
 
-  console.log('pathnaem', pathname);
-
   return (
     <nav
       className={cn('flex justify-end lg:space-x-6 m-10 border-b ', className)}

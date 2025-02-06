@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminDashboard from './admin-dashboard';
+import AdminDashboard from '../../components/admin/admin-dashboard';
 import LoginPage from './sign-in';
 
 export default function AdminLayout() {
@@ -13,7 +13,7 @@ export default function AdminLayout() {
       const authStatus = localStorage.getItem('isAuthenticated') === 'true';
       setIsAuthenticated(authStatus);
 
-      if (!authStatus) {
+      if (authStatus) {
         router.push('/admin');
       }
     }

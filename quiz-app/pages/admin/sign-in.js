@@ -9,7 +9,8 @@ const SignIn = () => {
   const handleLogin = () => {
     if (password === 'admin123') {
       localStorage.setItem('isAuthenticated', 'true');
-      router.push('/admin/admin-dashboard');
+      router.push('/admin');
+      location.reload();
     } else {
       alert('Incorrect password!');
     }
