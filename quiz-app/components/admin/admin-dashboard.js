@@ -41,24 +41,27 @@ const AdminDashboard = () => {
   return (
     <div className='flex justify-center '>
       <main className='flex flex-col  text-white min-h-screen gap-3 w-80 gap-5'>
-        <Card className='text-center'>
+        <h1 className='text-3xl font-bold mb-6 text-center'>Admin Settings</h1>
+        <Card className='text-center flex flex-col'>
           <CardHeader>
             <CardTitle className='text-2xl font-bold'>
               Current Settings
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className='mb-4'>
-              <Label className='font-medium mb-1'>Number of Questions: </Label>
-              <span>{adminSettings.numOfQuestions}</span>
+          <CardContent className='mb-4 flex flex-col gap-4'>
+            <div>
+              <Label>Number of Questions: </Label>
+              <span className='font-bold'>{adminSettings.numOfQuestions}</span>
             </div>
-            <div className='mb-4'>
-              <Label className='font-medium mb-1'>Question Type: </Label>
-              <span>{adminSettings.questionType}</span>
+            <div>
+              <Label>Question Type: </Label>
+              <span className='font-bold'>
+                {adminSettings.questionType.charAt(0).toUpperCase() +
+                  adminSettings.questionType.slice(1)}
+              </span>
             </div>
           </CardContent>
         </Card>
-        <h1 className='text-3xl font-bold mb-6 text-center'>Admin Settings</h1>
         <div className='mb-4'>
           <Label className='font-medium mb-1'>Number of Questions:</Label>
           <Input
