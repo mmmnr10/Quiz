@@ -1,6 +1,6 @@
 'use client';
 import { useTrivia } from '../../context/QuizContext';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { useState, useEffect } from 'react';
 import { Input } from '../ui/input';
 import {
@@ -40,13 +40,11 @@ const AdminDashboard = () => {
 
   return (
     <div className='flex justify-center '>
-      <main className='flex flex-col  text-white min-h-screen gap-3 w-80 gap-5'>
+      <main className='flex flex-col   min-h-screen w-80 gap-5'>
         <h1 className='text-3xl font-bold mb-6 text-center'>Admin Settings</h1>
         <Card className='text-center flex flex-col'>
           <CardHeader>
-            <CardTitle className='text-2xl font-bold'>
-              Current Settings
-            </CardTitle>
+            <CardTitle className='h2-bold'>Current Settings</CardTitle>
           </CardHeader>
           <CardContent className='mb-4 flex flex-col gap-4'>
             <div>
@@ -84,9 +82,7 @@ const AdminDashboard = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleSaveSettings} variant='secondary'>
-          Save Settings
-        </Button>
+        <Button onClick={handleSaveSettings}>Save Settings</Button>
         <Button
           variant='destructive'
           onClick={() => {

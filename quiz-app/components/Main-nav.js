@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '../lib/utils';
 import Link from 'next/link';
+import ModeToggle from './mode-toggle';
 
 const links = [
   {
@@ -27,9 +28,14 @@ const MainNav = (className, ...props) => {
 
   return (
     <nav
-      className={cn('flex justify-end lg:space-x-6 m-10 border-b ', className)}
+      className={cn(
+        'flex justify-end items-center lg:space-x-6 m-10 border-b gap-3',
+        className
+      )}
       {...props}
     >
+      <ModeToggle />
+
       {links.map((link) => (
         <Link
           key={link.href}
