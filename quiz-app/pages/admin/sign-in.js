@@ -1,24 +1,33 @@
 'use client';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/Button';
 import { useToast } from '../../hooks/use-toast';
+import { Loader, Plus } from 'lucide-react';
 
 const SignIn = () => {
   const [password, setPassword] = useState(''),
     router = useRouter(),
-    { toast } = useToast();
+    { toast } = useToast(),
+    [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = () => {
+    setIsLoading(true);
     if (password === 'admin123') {
       localStorage.setItem('isAuthenticated', 'true');
-      router.push('/admin');
-      location.reload();
+
+      setTimeout(() => {
+        router.push('/admin');
+        location.reload();
+      }, 500);
     } else {
       toast({
         description: 'Invalid Password',
       });
+      setIsLoading(false);
+
+      return;
     }
   };
 
@@ -34,9 +43,11 @@ const SignIn = () => {
       />
       <Button
         onClick={handleLogin}
-        className='mt-4 px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600'
+        disable={isLoading}
+        type='button'
+        className='mt-4'
       >
-        Login
+        {isLoading ? <Loader className='w-4 h-4 animate-spin' /> : 'Login'}
       </Button>
     </main>
   );
