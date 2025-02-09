@@ -1,7 +1,8 @@
 import "@/styles/globals.css";
-import { TriviaProvider } from "@/context/QuizContext";
+import { TriviaProvider } from "../context/QuizContext";
 import { ThemeProvider } from "next-themes";
-import { PlayerProvider } from "@/context/PlayerContext"; // Importera PlayerProvider
+import { PlayerProvider } from "../pages/api/PlayerContext"; // Importera PlayerProvider
+import { ResultProvider } from "../context/ResultContext"; // Importera ResultProvider
 
 export default function App({ Component, pageProps }) {
   return (
@@ -11,11 +12,13 @@ export default function App({ Component, pageProps }) {
       enableSystem
       disableTransitionOnChange
     >
-      {/* PlayerProvider omsluter TriviaProvider för att dela spelardata */}
+      {/* PlayerProvider omsluter ResultProvider och TriviaProvider för att dela spelardata*/}
       <PlayerProvider>
-        <TriviaProvider>
-          <Component {...pageProps} />
-        </TriviaProvider>
+        <ResultProvider>
+          <TriviaProvider>
+            <Component {...pageProps} />
+          </TriviaProvider>
+        </ResultProvider>
       </PlayerProvider>
     </ThemeProvider>
   );
