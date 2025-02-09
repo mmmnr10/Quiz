@@ -2,8 +2,6 @@ import { createContext, useState, useContext, useEffect } from 'react';
 
 const TriviaContext = createContext();
 
-const url = 'https://opentdb.com/api.php';
-
 export const TriviaProvider = ({ children }) => {
   const [adminSettings, setAdminSettings] = useState({
     numOfQuestions: 10,
@@ -17,7 +15,7 @@ export const TriviaProvider = ({ children }) => {
     [currentQuestionIndex, setCurrentQuestionIndex] = useState(0),
     [questions, setQuestions] = useState([]),
     [score, setScore] = useState(0),
-    [loading, setLoading] = useState(false),
+    [isLoading, setLoading] = useState(false),
     [error, setError] = useState(null);
 
   const resetGame = () => {
@@ -25,7 +23,6 @@ export const TriviaProvider = ({ children }) => {
     setCurrentQuestionIndex(0);
     setScore(0);
   };
-
   const fetchQuestions = async (newSettings) => {
     setLoading(true);
     setError(null);
@@ -34,23 +31,28 @@ export const TriviaProvider = ({ children }) => {
       setPlayerSettings(newSettings);
     }
 
-    const category = newSettings?.category || playerSettings.category || '',
-      difficulty = newSettings?.difficulty || playerSettings.difficulty || '',
-      apiUrl = `${url}?amount=${adminSettings.numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${adminSettings.questionType}`;
+    const url = `/api/trivia?numOfQuestions=${
+      adminSettings.numOfQuestions
+    }&category=${
+      newSettings?.category || playerSettings.category || ''
+    }&difficulty=${
+      newSettings?.difficulty || playerSettings.difficulty || ''
+    }&questionType=${adminSettings.questionType}`;
 
     try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+      const response = await fetch(url);
 
       if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        const errorMessage = await response.text();
+        throw new Error(`Failed to fetch: ${errorMessage}`);
       }
 
-      setQuestions(data.results);
+      const data = await response.json();
+
+      setQuestions(data);
       setCurrentQuestionIndex(0);
       setScore(0);
-
-      return data.results;
+      return data;
     } catch (error) {
       setError(error);
       return [];
@@ -99,7 +101,7 @@ export const TriviaProvider = ({ children }) => {
         setAdminSettings,
         updateAdminSettings,
         answerQuestion,
-        loading,
+        isLoading,
         error,
       }}
     >

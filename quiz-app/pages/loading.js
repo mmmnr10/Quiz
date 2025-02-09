@@ -9,8 +9,6 @@ const LoadingPage = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
       }}
     >
       <Image src={Loader} alt='Loading...' width={150} height={150} />
