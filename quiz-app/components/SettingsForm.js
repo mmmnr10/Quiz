@@ -15,8 +15,8 @@ export default function SettingForm() {
 
   return (
     <div>
-      {!quizStarted ? (
-        <div className='max-w-md mx-auto bg-gray-100 p-6 rounded-lg shadow-lg'>
+      {!quizStarted && (
+        <div className='max-w-md mx-auto p-6 rounded-lg shadow-lg'>
           <h2 className='text-xl font-semibold text-center mb-4'>
             Quiz Setting
           </h2>
@@ -25,7 +25,7 @@ export default function SettingForm() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className='w-full p-2 border rounded-lg mb-4 bg-white'
+              className='w-full p-2 border rounded-lg mb-4'
             >
               <option value=''>Any</option>
               <option value='9'>General Knowledge</option>
@@ -38,7 +38,7 @@ export default function SettingForm() {
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
-              className='w-full p-2 border rounded-lg mb-4 bg-white'
+              className='w-full p-2 border rounded-lg mb-4'
             >
               <option value='easy'>Easy</option>
               <option value='medium'>Medium</option>
@@ -47,14 +47,12 @@ export default function SettingForm() {
 
             <button
               type='submit'
-              className='w-full bg-gray-700 text-white p-3 rounded-lg hover:bg-gray-600 transition-all'
+              className='w-full bg-gray-700  p-3 rounded-lg hover:bg-gray-600 transition-all'
             >
               Start Quiz
             </button>
           </form>
         </div>
-      ) : (
-        <QuizPage /> // Show QuizPage when quiz starts
       )}
     </div>
   );

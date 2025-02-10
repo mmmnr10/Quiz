@@ -49,7 +49,7 @@ export const TriviaProvider = ({ children }) => {
       console.log('text: ' + response.text);
       console.log('json: ' + response.json);
       const data = await response.json();
-      console.log('data: ' + data);
+      console.log('data: ', data);
 
       if (!response.ok) {
         // console.log("response: " + data);
