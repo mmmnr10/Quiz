@@ -21,8 +21,10 @@ export const TriviaProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [userAnswers, setUserAnswers] = useState([]); // Ny state för användarens svar
+    const [quizStarted, setQuizStarted] = useState(false);
 
     const resetGame = () => {
+        setQuizStarted(false); //Reset quiz when game restarts
         setQuestions([]);
         setCurrentQuestionIndex(0);
         setScore(0); // Återställ score till 0
@@ -38,14 +40,19 @@ export const TriviaProvider = ({ children }) => {
         }
 
         const category = newSettings?.category || playerSettings.category || '',
-              difficulty = newSettings?.difficulty || playerSettings.difficulty || '',
-              apiUrl = `${url}?amount=${adminSettings.numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${adminSettings.questionType}`;
+            difficulty = newSettings?.difficulty || playerSettings.difficulty || '',
+            apiUrl = `${url}?amount=${adminSettings.numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${adminSettings.questionType}`;
 
         try {
             const response = await fetch(apiUrl);
+            console.log("status: " + response.status);
+            console.log("text: " + response.text);
+            console.log("json: " + response.json);
             const data = await response.json();
+            console.log("data: " + data);
 
             if (!response.ok) {
+                // console.log("response: " + data);
                 throw new Error(data.message || 'Something went wrong');
             }
 
@@ -53,10 +60,12 @@ export const TriviaProvider = ({ children }) => {
             setCurrentQuestionIndex(0);
             setScore(0); // Återställ score när nya frågor hämtas
             setUserAnswers([]); // Återställ användarens svar
+            setQuizStarted(true); 
 
             return data.results;
         } catch (error) {
             setError(error);
+            console.log("error: " + error);
             return [];
         } finally {
             setLoading(false);
@@ -91,6 +100,8 @@ export const TriviaProvider = ({ children }) => {
             setPlayerSettings,
             setAdminSettings,
             answerQuestion,
+            quizStarted,
+            setQuizStarted,
             loading,
             error,
         }}>

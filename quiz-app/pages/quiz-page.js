@@ -1,14 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
 import Questions from '../components/Questions';
 import Results from '../components/Results';
+import SettingsForm from '../components/SettingsForm';
+
 
 const QuizPage = () => {
-    const { fetchQuestions, questions, currentQuestionIndex } = useTrivia();
+    const { fetchQuestions, questions, currentQuestionIndex, playerSettings } = useTrivia();
+    const [quizStarted, setQuizStarted] = useState(false);
 
     useEffect(() => {
-        fetchQuestions();
-    }, []);
+        if (quizStarted) {
+            fetchQuestions(playerSettings);
+        }
+    }, [quizStarted]);
+
+
+    // If quiz hasn't started, show settings form
+    if (!quizStarted) {
+        return <SettingsForm startQuiz={() => setQuizStarted(true)} />;
+    }
 
     // Kontrollera om frågor är tomma
     if (!questions.length) {
