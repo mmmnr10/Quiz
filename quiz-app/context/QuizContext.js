@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const TriviaContext = createContext();
 
@@ -31,28 +31,19 @@ export const TriviaProvider = ({ children }) => {
     setUserAnswers([]); // Återställ användarens svar
   };
 
-  const fetchQuestions = async (newSettings) => {
+  const fetchQuestions = async (newSettings = playerSettings) => {
     setLoading(true);
     setError(null);
 
-    if (newSettings) {
-      setPlayerSettings(newSettings);
-    }
-
-    const category = newSettings?.category || playerSettings.category || '',
-      difficulty = newSettings?.difficulty || playerSettings.difficulty || '',
+    const { category, difficulty } = newSettings,
       apiUrl = `${url}?amount=${adminSettings.numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${adminSettings.questionType}`;
 
     try {
       const response = await fetch(apiUrl);
-      console.log('status: ' + response.status);
-      console.log('text: ' + response.text);
-      console.log('json: ' + response.json);
+
       const data = await response.json();
-      console.log('data: ', data);
 
       if (!response.ok) {
-        // console.log("response: " + data);
         throw new Error(data.message || 'Something went wrong');
       }
 
@@ -62,7 +53,7 @@ export const TriviaProvider = ({ children }) => {
       setUserAnswers([]); // Återställ användarens svar
       setQuizStarted(true);
 
-      return data.results;
+      // return data.results;
     } catch (error) {
       setError(error);
       console.log('error: ' + error);

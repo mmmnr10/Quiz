@@ -15,16 +15,16 @@ export default function App({ Component, pageProps }) {
       disableTransitionOnChange
     >
       {/* PlayerProvider omsluter ResultProvider och TriviaProvider för att dela spelardata*/}
-      <PlayerProvider>
-        <ResultProvider>
-          <TriviaProvider>
+      <TriviaProvider>
+        <PlayerProvider>
+          <ResultProvider>
             <Layout>
               <Component {...pageProps} />
             </Layout>
             <Toaster />
-          </TriviaProvider>
-        </ResultProvider>
-      </PlayerProvider>
+          </ResultProvider>
+        </PlayerProvider>
+      </TriviaProvider>
     </ThemeProvider>
   );
 }

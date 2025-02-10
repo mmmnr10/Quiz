@@ -1,9 +1,5 @@
+import SettingsForm from '../components/SettingsForm';
 
 export default function ResultPage() {
-
-  return (
-   <div>
-    hey
-   </div>
-  );
+  return <SettingsForm />;
 }

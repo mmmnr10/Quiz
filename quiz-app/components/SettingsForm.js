@@ -1,22 +1,32 @@
 import { useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
 import QuizPage from '../pages/quiz-page';
+import { useRouter } from 'next/navigation';
+import { Button } from './ui/button';
+import LoadingPage from '../pages/loading';
 
 export default function SettingForm() {
-  const { setPlayerSettings, fetchQuestions, quizStarted } = useTrivia();
+  const { fetchQuestions, quizStarted, loading } = useTrivia();
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
+  const route = useRouter();
 
-  const handleSelection = (e) => {
+  const handleSelection = async (e) => {
     e.preventDefault();
-    setPlayerSettings({ category, difficulty });
-    fetchQuestions({ category, difficulty });
+
+    await fetchQuestions({ category, difficulty });
+
+    route.push('/quiz-page');
   };
+
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div>
       {!quizStarted && (
-        <div className='max-w-md mx-auto p-6 rounded-lg shadow-lg'>
+        <div className='max-w-md mx-auto p-6 rounded-lg shadow-lg border'>
           <h2 className='text-xl font-semibold text-center mb-4'>
             Quiz Setting
           </h2>
@@ -45,12 +55,9 @@ export default function SettingForm() {
               <option value='hard'>Hard</option>
             </select>
 
-            <button
-              type='submit'
-              className='w-full bg-gray-700  p-3 rounded-lg hover:bg-gray-600 transition-all'
-            >
+            <Button type='submit' className='w-full'>
               Start Quiz
-            </button>
+            </Button>
           </form>
         </div>
       )}
