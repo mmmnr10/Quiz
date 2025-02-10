@@ -4,9 +4,16 @@ import QuizPage from '../pages/quiz-page';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import LoadingPage from '../pages/loading';
+import { Loader } from 'lucide-react';
 
 export default function SettingForm() {
-  const { fetchQuestions, quizStarted, loading } = useTrivia();
+  const {
+    fetchQuestions,
+    quizStarted,
+    loading,
+    loadingCategories,
+    categories,
+  } = useTrivia();
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
   const route = useRouter();
@@ -32,16 +39,19 @@ export default function SettingForm() {
           </h2>
           <form onSubmit={handleSelection}>
             <label className='block mb-2 font-medium'>Category:</label>
+            {loadingCategories && <Loader className='w-4- h-4 animate-spin' />}
+
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className='w-full p-2 border rounded-lg mb-4'
+              disabled={loadingCategories}
             >
-              <option value=''>Any</option>
-              <option value='9'>General Knowledge</option>
-              <option value='18'>Science: Computers</option>
-              <option value='23'>History</option>
-              <option value='21'>Sports</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
 
             <label className='block mb-2 font-medium'>Difficulty:</label>

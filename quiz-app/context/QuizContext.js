@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const TriviaContext = createContext();
 
@@ -22,6 +22,8 @@ export const TriviaProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]); // Ny state för användarens svar
   const [quizStarted, setQuizStarted] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
 
   const resetGame = () => {
     setQuizStarted(false); //Reset quiz when game restarts
@@ -30,6 +32,29 @@ export const TriviaProvider = ({ children }) => {
     setScore(0); // Återställ score till 0
     setUserAnswers([]); // Återställ användarens svar
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+
+      try {
+        const response = await fetch('https://opentdb.com/api_category.php');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+
+        setCategories(data.trivia_categories || []);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const fetchQuestions = async (newSettings = playerSettings) => {
     setLoading(true);
@@ -107,6 +132,8 @@ export const TriviaProvider = ({ children }) => {
         loading,
         error,
         updateAdminSettings,
+        categories,
+        loadingCategories,
       }}
     >
       {children}
