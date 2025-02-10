@@ -1,28 +1,26 @@
+import { useEffect, useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
 import Questions from '../components/Questions';
 import LoadingPage from './loading';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Results from '../components/Results';
+import SettingsForm from '../components/SettingsForm';
 
 const QuizPage = () => {
-  const { fetchQuestions, isLoading, questions, currentQuestionIndex } =
-      useTrivia(),
-    router = useRouter();
+  const { fetchQuestions, questions, currentQuestionIndex, playerSettings } =
+    useTrivia();
+  const [quizStarted, setQuizStarted] = useState(false);
 
   useEffect(() => {
-    const navigationType = performance.getEntriesByType('navigation')[0]?.type;
-
-    if (navigationType === 'reload') {
-      router.push('/');
-      return;
+    if (quizStarted) {
+      fetchQuestions(playerSettings);
     }
+  }, [quizStarted]);
 
-    fetchQuestions();
-  }, []);
-
-  if (isLoading) {
-    return <LoadingPage />;
+  // If quiz hasn't started, show settings form
+  if (!quizStarted) {
+    return <SettingsForm startQuiz={() => setQuizStarted(true)} />;
   }
 
   // Kontrollera om frågor är tomma
