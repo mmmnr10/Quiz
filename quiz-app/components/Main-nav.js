@@ -14,6 +14,11 @@ const links = [
     title: 'Admin',
     href: '/admin',
   },
+  {
+    title: 'Admin Overview',
+    href: '/admin/overview',
+    protected: true,
+  },
 ];
 
 const MainNav = (className, ...props) => {
@@ -36,27 +41,32 @@ const MainNav = (className, ...props) => {
     >
       <ModeToggle />
 
-      {links.map((link) => {
-        const isHomeActive =
-          link.href === '/' && (pathname === '/' || pathname === '/quiz-page');
-        const isAdminActive =
-          link.href === '/admin' && pathname.startsWith('/admin');
+      {links
+        .filter((link) => !link.protected || isAuthenticated)
+        .map((link) => {
+          const isHomeActive =
+            link.href === '/' &&
+            (pathname === '/' || pathname === '/quiz-page');
+          const isAdminActive = link.href === '/admin' && pathname === '/admin'; // Only highlight on exact match
+          const isAdminOverviewActive =
+            link.href === '/admin/overview' &&
+            pathname.startsWith('/admin/overview');
 
-        return (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={cn(
-              'text-sm font-medium transition-colors hover:text-primary uppercase',
-              isHomeActive || isAdminActive
-                ? 'text-primary'
-                : 'text-muted-foreground'
-            )}
-          >
-            {link.title}
-          </Link>
-        );
-      })}
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'text-sm font-medium transition-colors hover:text-primary uppercase',
+                isHomeActive || isAdminActive || isAdminOverviewActive
+                  ? 'text-primary'
+                  : 'text-muted-foreground'
+              )}
+            >
+              {link.title}
+            </Link>
+          );
+        })}
     </nav>
   );
 };
