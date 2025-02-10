@@ -1,14 +1,16 @@
-import "@/styles/globals.css";
-import { TriviaProvider } from "../context/QuizContext";
-import { ThemeProvider } from "next-themes";
-import { PlayerProvider } from "../pages/api/PlayerContext"; // Importera PlayerProvider
-import { ResultProvider } from "../context/ResultContext"; // Importera ResultProvider
+import '../styles/globals.css';
+import { TriviaProvider } from '../context/QuizContext';
+import { ThemeProvider } from 'next-themes';
+import { PlayerProvider } from '../pages/api/PlayerContext'; // Importera PlayerProvider
+import { ResultProvider } from '../context/ResultContext'; // Importera ResultProvider
+import Layout from '../components/Layout';
+import { Toaster } from '../components/ui/toaster';
 
 export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider
-      attribute={"class"}
-      defaultTheme="dark"
+      attribute={'class'}
+      defaultTheme='dark'
       enableSystem
       disableTransitionOnChange
     >
@@ -16,7 +18,10 @@ export default function App({ Component, pageProps }) {
       <PlayerProvider>
         <ResultProvider>
           <TriviaProvider>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+            <Toaster />
           </TriviaProvider>
         </ResultProvider>
       </PlayerProvider>
