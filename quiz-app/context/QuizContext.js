@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { decodeHTML } from '../lib/utils';
 
 const TriviaContext = createContext();
 
@@ -72,7 +73,14 @@ export const TriviaProvider = ({ children }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      setQuestions(data.results);
+      const decodedQuestions = data.results.map((q) => ({
+        ...q,
+        question: decodeHTML(q.question),
+        correct_answer: decodeHTML(q.correct_answer),
+        incorrect_answers: q.incorrect_answers.map(decodeHTML),
+      }));
+
+      setQuestions(decodedQuestions);
       setCurrentQuestionIndex(0);
       setScore(0); // Återställ score när nya frågor hämtas
       setUserAnswers([]); // Återställ användarens svar

@@ -1,12 +1,6 @@
 import { useTrivia } from '../context/QuizContext';
 import { Button } from './ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from './ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from './ui/card';
 
 export default function Questions() {
   const { questions, currentQuestionIndex, answerQuestion } = useTrivia();

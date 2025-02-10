@@ -36,18 +36,27 @@ const MainNav = (className, ...props) => {
     >
       <ModeToggle />
 
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={cn(
-            'text-sm font-medium transition-colors hover:text-primnary uppercase',
-            pathname === link.href ? '' : 'text-muted-foreground'
-          )}
-        >
-          {link.title}
-        </Link>
-      ))}
+      {links.map((link) => {
+        const isHomeActive =
+          link.href === '/' && (pathname === '/' || pathname === '/quiz-page');
+        const isAdminActive =
+          link.href === '/admin' && pathname.startsWith('/admin');
+
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cn(
+              'text-sm font-medium transition-colors hover:text-primary uppercase',
+              isHomeActive || isAdminActive
+                ? 'text-primary'
+                : 'text-muted-foreground'
+            )}
+          >
+            {link.title}
+          </Link>
+        );
+      })}
     </nav>
   );
 };

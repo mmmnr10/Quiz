@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
 import QuizPage from '../pages/quiz-page';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import LoadingPage from '../pages/loading';
 import { Loader } from 'lucide-react';
@@ -13,10 +13,18 @@ export default function SettingForm() {
     loading,
     loadingCategories,
     categories,
+    setQuizStarted,
   } = useTrivia();
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
   const route = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setQuizStarted(false);
+    }
+  }, [pathname]);
 
   const handleSelection = async (e) => {
     e.preventDefault();
