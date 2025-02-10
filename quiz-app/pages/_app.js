@@ -1,8 +1,10 @@
-import '@/styles/globals.css';
+import '../styles/globals.css';
 import { TriviaProvider } from '../context/QuizContext';
 import { ThemeProvider } from 'next-themes';
 import { PlayerProvider } from '../pages/api/PlayerContext'; // Importera PlayerProvider
 import { ResultProvider } from '../context/ResultContext'; // Importera ResultProvider
+import Layout from '../components/Layout';
+import { Toaster } from '../components/ui/toaster';
 
 export default function App({ Component, pageProps }) {
   return (

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
 import Questions from '../components/Questions';
 import LoadingPage from './loading';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Results from '../components/Results';
 import SettingsForm from '../components/SettingsForm';
