@@ -16,7 +16,7 @@ const QuizPage = () => {
 
   if (!quizStarted) return null;
 
-  // Kontrollera om frågor är tomma
+  // Check if questions are empty
   if (!questions.length) {
     return <p className='text-center text-gray-600'>No questions available.</p>;
   }

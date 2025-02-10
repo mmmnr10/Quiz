@@ -91,7 +91,6 @@ export const TriviaProvider = ({ children }) => {
       setUserAnswers([]); // Återställ användarens svar
       setQuizStarted(true);
 
-      // return data.results;
     } catch (error) {
       setError(error);
       console.log('error: ' + error);
