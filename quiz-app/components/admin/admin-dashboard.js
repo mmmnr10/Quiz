@@ -1,6 +1,6 @@
 'use client';
 import { useTrivia } from '../../context/QuizContext';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { useState, useEffect } from 'react';
 import { Input } from '../ui/input';
 import {
@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Label } from '../ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { useToast } from '../../hooks/use-toast';
 
 const AdminDashboard = () => {

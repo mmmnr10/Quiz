@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTrivia } from '../context/QuizContext';
-import QuizPage from '../pages/quiz-page';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import LoadingPage from '../pages/loading';
 import { Loader } from 'lucide-react';
+import MotionDiv from './motion-div';
 
 export default function SettingForm() {
   const {
@@ -39,7 +39,7 @@ export default function SettingForm() {
   }
 
   return (
-    <div>
+    <MotionDiv>
       {!quizStarted && (
         <div className='max-w-md mx-auto p-6 rounded-lg shadow-lg border'>
           <h2 className='text-xl font-semibold text-center mb-4'>
@@ -79,6 +79,6 @@ export default function SettingForm() {
           </form>
         </div>
       )}
-    </div>
+    </MotionDiv>
   );
 }

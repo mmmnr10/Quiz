@@ -6,9 +6,14 @@ const TriviaContext = createContext();
 const url = 'https://opentdb.com/api.php';
 
 export const TriviaProvider = ({ children }) => {
-  const [adminSettings, setAdminSettings] = useState({
-    numOfQuestions: 10,
-    questionType: 'multiple', // boolean true / false
+  const [adminSettings, setAdminSettings] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const storedSettings = localStorage.getItem('adminSettings');
+      return storedSettings
+        ? JSON.parse(storedSettings)
+        : { numOfQuestions: 10, questionType: 'multiple' };
+    }
+    return { numOfQuestions: 10, questionType: 'multiple' };
   });
 
   const [playerSettings, setPlayerSettings] = useState({
