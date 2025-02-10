@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useTrivia } from '../context/QuizContext';
-import { usePathname, useRouter } from 'next/navigation';
-import { Button } from './ui/button';
-import LoadingPage from '../pages/loading';
-import { Loader } from 'lucide-react';
-import MotionDiv from './motion-div';
+import { useEffect, useState } from "react";
+import { useTrivia } from "../context/QuizContext";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import LoadingPage from "../pages/loading";
+import { Loader } from "lucide-react";
+import MotionDiv from "./motion-div";
 
 export default function SettingForm() {
   const {
@@ -15,13 +15,13 @@ export default function SettingForm() {
     categories,
     setQuizStarted,
   } = useTrivia();
-  const [category, setCategory] = useState('');
-  const [difficulty, setDifficulty] = useState('easy');
+  const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
   const route = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === '/') {
+    if (pathname === "/") {
       setQuizStarted(false);
     }
   }, [pathname]);
@@ -31,7 +31,7 @@ export default function SettingForm() {
 
     await fetchQuestions({ category, difficulty });
 
-    route.push('/quiz-page');
+    route.push("/quiz-page");
   };
 
   if (loading) {
@@ -41,18 +41,22 @@ export default function SettingForm() {
   return (
     <MotionDiv>
       {!quizStarted && (
-        <div className='max-w-md mx-auto p-6 rounded-lg shadow-lg border'>
-          <h2 className='text-xl font-semibold text-center mb-4'>
-            Quiz Setting
+        <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-xl border border-gray-200">
+          <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
+            Quiz Settings
           </h2>
           <form onSubmit={handleSelection}>
-            <label className='block mb-2 font-medium'>Category:</label>
-            {loadingCategories && <Loader className='w-4- h-4 animate-spin' />}
+            <label className="block mb-3 text-lg font-medium text-gray-900">
+              Category:
+            </label>
+            {loadingCategories && (
+              <Loader className="w-6 h-6 text-blue-500 animate-spin mx-auto" />
+            )}
 
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className='w-full p-2 border rounded-lg mb-4'
+              className="w-full p-3 border rounded-lg mb-5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={loadingCategories}
             >
               {categories.map((cat) => (
@@ -62,18 +66,23 @@ export default function SettingForm() {
               ))}
             </select>
 
-            <label className='block mb-2 font-medium'>Difficulty:</label>
+            <label className="block mb-3 text-lg font-medium text-gray-900">
+              Difficulty:
+            </label>
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
-              className='w-full p-2 border rounded-lg mb-4'
+              className="w-full p-3 border rounded-lg mb-6 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value='easy'>Easy</option>
-              <option value='medium'>Medium</option>
-              <option value='hard'>Hard</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
             </select>
 
-            <Button type='submit' className='w-full'>
+            <Button
+              type="submit"
+              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500"
+            >
               Start Quiz
             </Button>
           </form>
