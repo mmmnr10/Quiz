@@ -56,7 +56,7 @@ export default function SettingForm() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-3 border rounded-lg mb-5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border rounded-lg mb-5  focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={loadingCategories}
             >
               {categories.map((cat) => (
@@ -72,7 +72,7 @@ export default function SettingForm() {
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
-              className="w-full p-3 border rounded-lg mb-6 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border rounded-lg mb-6  focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
@@ -81,7 +81,7 @@ export default function SettingForm() {
 
             <Button
               type="submit"
-              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500"
+              className="w-full py-3  text-white  hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500"
             >
               Start Quiz
             </Button>
