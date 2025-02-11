@@ -81,7 +81,7 @@ export default function SettingForm() {
 
             <Button
               type="submit"
-              className="w-full py-3  text-white  hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500"
+              className="w-full"
             >
               Start Quiz
             </Button>

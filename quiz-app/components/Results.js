@@ -74,7 +74,6 @@ export default function Results() {
       <div className="mt-8 text-center">
         <Button
           onClick={handleRestartQuiz}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg shadow-lg transition-all duration-300"
         >
           Restart Quiz
         </Button>
